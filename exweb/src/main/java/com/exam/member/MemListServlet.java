@@ -34,31 +34,34 @@ public class MemListServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {   
 		//int local = 0;
-		
 		List<MemberVo> list = memberDao.selectMemberList();
+		
+	    req.setAttribute("memberList", list);
+		
+		req.getRequestDispatcher("/WEB-INF/views/member/memList.jsp").forward(req, resp);
 			
-		resp.setCharacterEncoding("UTF-8");
-		resp.setContentType("text/html");
-		PrintWriter out = resp.getWriter();
-		out.println("<!DOCTYPE html>       ");
-		out.println("<html>                ");
-		out.println("<head>                ");
-		out.println("<meta charset='UTF-8'>");
-		out.println("<title>회원관리</title>  ");
-		out.println("</head>               ");
-		out.println("<body>                ");
-		out.println("<h1>회원목록</h1>");
-		out.println("<a href='" + req.getContextPath() + "/member/addform.do' >회원추가</a>");
-		for(MemberVo vo : list) {
-	//	System.out.println( memId +":"+ memPass +":"+ memName +":"+ memPoint);				 
-		out.println("<p>"+ vo.getMemId() +" : "+ vo.getMemPass() +" : "+ vo.getMemName() +" : "+ vo.getMemPoint()); 
-	//	out.println("<a href='" + req.getContextPath() + "/member/del.do?memId=" + vo.getMemId() + "' >삭제</a>");
-		out.println("<a href='" + req.getContextPath() + "/member/del.do?memId=" + vo.getMemId() + "' ><button type='button'>삭제</button></a>");				
-		out.println("</p>");
-		}
-	//	out.println("<button onclick=\"location.href='" + req.getContextPath() + "/member/addform.do'\">회원추가</button >");
-		out.println("</body>               ");
-		out.println("</html>               "); 				
+//		resp.setCharacterEncoding("UTF-8");
+//		resp.setContentType("text/html");
+//		PrintWriter out = resp.getWriter();
+//		out.println("<!DOCTYPE html>       ");
+//		out.println("<html>                ");
+//		out.println("<head>                ");
+//		out.println("<meta charset='UTF-8'>");
+//		out.println("<title>회원관리</title>  ");
+//		out.println("</head>               ");
+//		out.println("<body>                ");
+//		out.println("<h1>회원목록</h1>");
+//		out.println("<a href='" + req.getContextPath() + "/member/addform.do' >회원추가</a>");
+//		for(MemberVo vo : list) {
+//	//	System.out.println( memId +":"+ memPass +":"+ memName +":"+ memPoint);				 
+//		out.println("<p>"+ vo.getMemId() +" : "+ vo.getMemPass() +" : "+ vo.getMemName() +" : "+ vo.getMemPoint()); 
+//	//	out.println("<a href='" + req.getContextPath() + "/member/del.do?memId=" + vo.getMemId() + "' >삭제</a>");
+//		out.println("<a href='" + req.getContextPath() + "/member/del.do?memId=" + vo.getMemId() + "' ><button type='button'>삭제</button></a>");				
+//		out.println("</p>");
+//		}
+//	//	out.println("<button onclick=\"location.href='" + req.getContextPath() + "/member/addform.do'\">회원추가</button >");
+//		out.println("</body>               ");
+//		out.println("</html>               "); 				
 
 	}
 

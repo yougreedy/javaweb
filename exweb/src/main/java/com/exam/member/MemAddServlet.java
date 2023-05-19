@@ -16,8 +16,15 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/member/add.do")
 public class MemAddServlet extends HttpServlet {
 	private MemberDao memberDao = new MemberDaoBatis();
+	
 	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	    req.getRequestDispatcher("/WEB-INF/views/member/memAdd.jsp").forward(req, resp);
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	
 		//req.setCharacterEncoding("UTF-8"); 필터로 이동
 		MemberVo vo = new MemberVo();
 		vo.setMemId(req.getParameter("memId"));

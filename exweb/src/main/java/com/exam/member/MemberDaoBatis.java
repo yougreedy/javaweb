@@ -57,5 +57,14 @@ public class MemberDaoBatis implements MemberDao{
 	    return num;
 	}
 
+	@Override
+	public MemberVo selectMemberList(String memId) {
+	  MemberVo vo = null; 
+		try (SqlSession session = sqlSessionFactory.openSession()) {		
+			vo = session.selectOne("com.exam.member.MemberDao.selectMember",memId);
+			}
+		return vo;
+	}
+
 	
 }

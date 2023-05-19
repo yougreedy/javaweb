@@ -24,6 +24,14 @@
   <!--  <select id="selectMemberList" resultMap="MemberMap">-->
     SELECT mem_id, mem_Pass, mem_Name, mem_Point FROM MEMBER
   </select>
+  
+    <select id="selectMember" resultType="MemberVo"> 
+  <!--resultMap속성을 사용하여, id가 MemberMap인 resultMap에 써놓은대로 조회결과를 담도록 설정-->
+  <!--  <select id="selectMemberList" resultMap="MemberMap">-->
+    SELECT mem_id, mem_Pass, mem_Name, mem_Point FROM MEMBER
+    WHERE mem_id = #{memId}
+  </select>
+  
  <!-- sql문 실행시 전달받는 데이터의 타입을 parameterType 속성에 지정 가능(생략도 가능)-->
   <insert id="insertMember" parameterType="MemberVo">
      insert into member ( mem_id, mem_pass, mem_name, mem_point ) 
@@ -41,6 +49,9 @@
  <!-- 문자열, 정수 등 단일값을 갖는 데이터를 파라미터(인자)로 받은 경우,
   #{속성명} 의 속성명에는 어떤 이름을 써도 무방
   일반적으로 value 또는 변수명을 사용  -->
+  
+  
+  
 </mapper>
 
 
