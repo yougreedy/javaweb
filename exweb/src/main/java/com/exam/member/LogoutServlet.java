@@ -12,34 +12,24 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@WebServlet("/member/edit.do")
-public class MemEditServlet extends HttpServlet {
-	private MemberDao memberDao = new MemberDaoBatis();
-	
+@WebServlet("/member/logout.do")
+public class LogoutServlet extends HttpServlet {
+ 		
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	 String memId = req.getParameter("memId");
-   	 MemberVo vo = memberDao.selectMemberList(memId);
-	req.setAttribute("mvo", vo);	
 		
-		req.getRequestDispatcher("/WEB-INF/views/member/memEdit.jsp").forward(req, resp);
+		HttpSession session = req.getSession();
+//		session.setAttribute("loginUser", null);//세션에 지정한 이름의 속성값을 null로 설정
+//	  	session.removeAttribute("loginUser"); // 세션에서 지정한 이름의 속성을 삭제
+        session.invalidate();                 //세션객체를 제거(후 다시 생성), 모든 속성들도 함께 삭제
+      
+        resp.sendRedirect(req.getContextPath() + "/member/login.do"); 
+       	    
 	}
 	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	
-		//req.setCharacterEncoding("UTF-8"); 필터로 이동
-		MemberVo vo = new MemberVo();
-		vo.setMemId(req.getParameter("memId"));
-	    vo.setMemName(req.getParameter("memName"));
-		vo.setMemPoint(Integer.parseInt(req.getParameter("memPoint"))) ;
-			
-		int n = memberDao.updateMember(vo);
-				
-		System.out.println( n + "명의 회원 변경");
-		resp.sendRedirect(req.getContextPath() + "/member/list.do"); 
-		
+}
 		// 이시점에서 추가된 목록을 보여주고 싶다면?
 		// 회원목록 출력
 		// MemListServlet 실행! 3가지 방법
@@ -68,10 +58,7 @@ public class MemEditServlet extends HttpServlet {
 //			out.println("<button onclick=\"location.href='" + req.getContextPath() + "/member/list.do'\">회원목록</button >");
 //			out.println("</body>               ");
 //			out.println("</html>               ");
-		}
-	
-
-	}
+		
 	
 	
 
