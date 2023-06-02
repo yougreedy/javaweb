@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/member/add.do")
 public class MemAddServlet extends HttpServlet {
-	private MemberDao memberDao = new MemberDaoBatis();
+	private MemberService memberService = MemberServiceImpl.getInstacne();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,7 +32,7 @@ public class MemAddServlet extends HttpServlet {
 		vo.setMemName(req.getParameter("memName"));
 		vo.setMemPoint(Integer.parseInt(req.getParameter("memPoint"))) ;
 			
-		int n = memberDao.insertMember(vo);
+		int n = memberService.insertMember(vo);
 				
 		System.out.println( n + "명의 회원추가");
 		

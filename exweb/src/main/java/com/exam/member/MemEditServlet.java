@@ -15,12 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/member/edit.do")
 public class MemEditServlet extends HttpServlet {
-	private MemberDao memberDao = new MemberDaoBatis();
+	private MemberService memberService = MemberServiceImpl.getInstacne();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	 String memId = req.getParameter("memId");
-   	 MemberVo vo = memberDao.selectMemberList(memId);
+   	 MemberVo vo = memberService.selectMember(memId);
 	req.setAttribute("mvo", vo);	
 		
 		req.getRequestDispatcher("/WEB-INF/views/member/memEdit.jsp").forward(req, resp);
@@ -35,7 +35,7 @@ public class MemEditServlet extends HttpServlet {
 	    vo.setMemName(req.getParameter("memName"));
 		vo.setMemPoint(Integer.parseInt(req.getParameter("memPoint"))) ;
 			
-		int n = memberDao.updateMember(vo);
+		int n = memberService.updateMember(vo);
 				
 		System.out.println( n + "명의 회원 변경");
 		resp.sendRedirect(req.getContextPath() + "/member/list.do"); 

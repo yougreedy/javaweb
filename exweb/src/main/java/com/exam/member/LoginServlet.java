@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 // LoginServlet 클래스의 doPost가 실행되도록 구현
 @WebServlet("/member/login.do")
 public class LoginServlet extends HttpServlet {
-	private MemberDao memberDao = new MemberDaoBatis();
+	private MemberService memberService = MemberServiceImpl.getInstacne();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 	    vo.setMemPass(req.getParameter("memPass"));
 	     
 		
-	    MemberVo mvo = memberDao.selectLogin(vo);
+	    MemberVo mvo = memberService.selectLogin(vo);
 		
 	    if(mvo == null) {//로그인 실패시, 로그인 화면으로 이동
 	      resp.sendRedirect(req.getContextPath() + "/member/login.do"); 

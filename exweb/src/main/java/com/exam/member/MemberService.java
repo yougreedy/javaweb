@@ -2,7 +2,7 @@ package com.exam.member;
 
 import java.util.List;
 
-public interface MemberDao {
+public interface MemberService {
 
 	List<MemberVo> selectMemberList();
 
@@ -11,7 +11,7 @@ public interface MemberDao {
 	int deleteMember(String memId);
 
 	MemberVo selectMember(String memId);
-
+	
 	int updateMember(MemberVo vo);
 
 	MemberVo selectLogin(MemberVo vo);

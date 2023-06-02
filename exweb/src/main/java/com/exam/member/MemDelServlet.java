@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/member/del.do")
 public class MemDelServlet extends HttpServlet {
-	private MemberDao memberDao = new MemberDaoBatis();
+	private MemberService memberService = MemberServiceImpl.getInstacne();
 	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,7 +30,7 @@ public class MemDelServlet extends HttpServlet {
 //		req.setCharacterEncoding("UTF-8");
 		String memId = req.getParameter("memId");
 	
-		int n = memberDao.deleteMember(memId);		
+		int n = memberService.deleteMember(memId);		
 		System.out.println(n + "명의 회원 삭제");		
 		resp.sendRedirect(req.getContextPath() + "/member/list.do");
 //		

@@ -29,11 +29,11 @@ import org.apache.jasper.tagplugins.jstl.core.ForEach;
 
 @WebServlet("/member/list.do")
 public class MemListServlet extends HttpServlet {
-	private MemberDao memberDao = new MemberDaoBatis();
+	private MemberService memberService = MemberServiceImpl.getInstacne();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {   
-       	List<MemberVo> list = memberDao.selectMemberList();
+       	List<MemberVo> list = memberService.selectMemberList();
 						
 	    req.setAttribute("memberList", list);
 		

@@ -1,6 +1,8 @@
 package com.exam.comm;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -21,6 +23,16 @@ import com.exam.member.MemberVo;
 
 
 public class LoginFilter implements Filter {
+	// 로그인 없이 사용가능한 요청결로들을 저장한 목록
+   private List<String> whiteList = new ArrayList<>();
+   
+	@Override
+ public void init(FilterConfig filterConfig) throws ServletException {
+       whiteList.add("/member/login.do");
+       whiteList.add("/member/add.do");
+ }	 
+   
+   
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -30,8 +42,11 @@ public class LoginFilter implements Filter {
 		       
 		        System.out.println("URI" + req.getRequestURI());
 		        System.out.println("URL" + req.getRequestURL());
-		       
-		        if(!req.getRequestURI().equals( req.getContextPath() + "/member/login.do")) {
+		        String reqPath = req.getRequestURI().substring(req.getContextPath().length());
+		        System.out.println("reqPath: " + reqPath);
+		        
+		        
+		        if(whiteList.contains(reqPath) == false) {
 		        	//요청보낸 사용자의 세션을 가져와서
 		        	HttpSession session = req.getSession();
 		        	//세션에 로그인정보를 꺼내와서
@@ -53,12 +68,7 @@ public class LoginFilter implements Filter {
 	
 }
 
-//	@Override
-//    public void init(FilterConfig filterConfig) throws ServletException {
-//          // 필터가 처음 생성됬을 때 1번 실행
-//        System.out.println("CharEncFilter init() 실행");   
-//        enc = filterConfig.getInitParameter("encoding");
-//    }	    
+   
 	
 //	@Override
 //	public void destroy() {

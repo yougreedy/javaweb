@@ -9,20 +9,18 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class MemberDaoBatis implements MemberDao{
+import com.exam.comm.MyBatisUtils;
 
-	SqlSessionFactory sqlSessionFactory;
-	{		
-		try { //마이바티스 전체 설정파일 위치 (클래스패스 기준)
-			String resource = "/batis/mybatis-config.xml"; // 마이바티스 전체 설정파일 위치
-			InputStream inputStream = Resources.getResourceAsStream(resource);	
-			//설정파일의 내용대로 sqlSessionFactory(아이바티스본체)룰 생성
-			sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+public class MemberDaoBatis implements MemberDao{
+       private MemberDaoBatis() {}
+       private static MemberDao memberDao = new MemberDaoBatis();
+       public static MemberDao getInstance() {
+    	   return memberDao;
+       }
 	
+	
+	private SqlSessionFactory sqlSessionFactory = MyBatisUtils.getSqlSessionFactory();
+		
 	@Override
 	public List<MemberVo> selectMemberList() {
 		List<MemberVo> list = null; //new ArrayList<MemberVo>();
@@ -58,7 +56,7 @@ public class MemberDaoBatis implements MemberDao{
 	}
 
 	@Override
-	public MemberVo selectMemberList(String memId) {
+	public MemberVo selectMember(String memId) {
 	  MemberVo vo = null; 
 		try (SqlSession session = sqlSessionFactory.openSession()) {		
 			vo = session.selectOne("com.exam.member.MemberDao.selectMember",memId);
